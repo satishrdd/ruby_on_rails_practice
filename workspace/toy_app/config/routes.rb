@@ -9,7 +9,13 @@ Rails.application.routes.draw do
   get 'users/new'
 
   resources :microposts,          only: [:create, :destroy]
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
+
+  resources :relationships , only: [:create, :destroy]
 
   root "static_pages#home"
   get '/help' ,to: 'static_pages#help'
